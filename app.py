@@ -14,7 +14,7 @@ dotenv.load_dotenv()
 
 app = Flask(__name__)
 
-MODEL_PATH = "/Users/tasyanadhila/Downloads/OCR_API/Object_Detection/Saved_Models/model.keras"
+MODEL_PATH = "Object_Detection/Saved_Models/model.keras"
 UPLOAD_FOLDER = './uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -88,7 +88,6 @@ def extract_total_amount(extracted_text):
         return subtotal_match.group(1)
 
     return "Total amount not found"
-
 
 # API Endpoints
 @app.route('/ocr', methods=['POST'])
@@ -181,8 +180,8 @@ def full_deployment_api():
                 return jsonify({"error": "Longitude and latitude must be numeric."}), 400
 
             # Define other parameters
-            key_path = os.getenv("GOOGLE_KEY_PATH", "/Users/tasyanadhila/Downloads/OCR_API/capstone-bangkit-d0ca4-7ff113bb4e31.json")
-            dataset_path = os.getenv("DATASET_PATH", "/Users/tasyanadhila/Downloads/OCR_API/recommender/dataset/purchase_history.csv")
+            key_path = os.getenv("GOOGLE_KEY_PATH", "key.json")
+            dataset_path = os.getenv("DATASET_PATH", "dataset.csv")
 
             # Perform full deployment
             recommendations = full_deployment(
@@ -208,7 +207,6 @@ def full_deployment_api():
         return jsonify({"error": "Invalid file type"}), 400
 
 
-
 @app.route('/records', methods=['GET'])
 @authenticate_request
 def get_records():
@@ -231,6 +229,5 @@ def index():
     """
     return "OCR Receipt API is running."
 
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
